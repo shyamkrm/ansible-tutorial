@@ -1,3 +1,9 @@
-invtestskmvm01.informatica.com
-invtestvmskm01.informatica.com
-invtestskmvm03.informatica.com
+ungrouped:
+  hosts:
+    invtestskmvm01.informatica.com:
+webservers:
+  hosts:
+    invtestvmskm01.informatica.com:
+dbservers:
+  hosts:
+    invtestskmvm03.informatica.com:
