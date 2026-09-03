@@ -1,0 +1,21 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+  
+  - name: Disable httpd serivce on boot
+    ansible.builtin.service:
+      name: httpd
+      enabled: false
+
+  - name: Stopped httpd service, if started
+    ansible.builtin.service:
+      name: httpd
+      state: stopped
+
+  - name: Install httpd package
+    ansible.builtin.dnf:
+      name: httpd
+      state: absent
+      autoremove: true
