@@ -14,7 +14,7 @@
       name: httpd
       state: stopped
 
-  - name: Install httpd package
+  - name: Remove the httpd package
     ansible.builtin.dnf:
       name: httpd
       state: absent

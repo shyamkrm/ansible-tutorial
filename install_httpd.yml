@@ -8,7 +8,7 @@
     ansible.builtin.dnf:
       update_cache: true
 
-  - name: Install httpd package
+  - name: Install the httpd package
     ansible.builtin.dnf:
       name: httpd
       state: present
