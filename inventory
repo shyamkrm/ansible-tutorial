@@ -1,9 +1,25 @@
-ungrouped:
-  hosts:
-    invtestskmvm01.informatica.com:
-webservers:
-  hosts:
-    invtestvmskm01.informatica.com:
-dbservers:
-  hosts:
-    invtestskmvm03.informatica.com:
+#ungrouped:
+#  hosts:
+#    invtestskmvm01.informatica.com:
+#webservers:
+#  hosts:
+#    invtestvmskm01.informatica.com:
+#dbservers:
+#  hosts:
+#    invtestskmvm03.informatica.com:
+
+#
+#invtestskmvm01.informatica.com apache_package=httpd php_package=php
+#invtestvmskm01.informatica.com apache_package=httpd php_package=php
+#invtestskmvm03.informatica.com apache_package=httpd php_package=php
+
+[web_servers]
+invtestskmvm01.informatica.com
+
+[db_servers]
+invtestvmskm01.informatica.com
+invtestskmvm03.informatica.com
+
+[file_servers]
+invtestvmskm01.informatica.com
+invtestskmvm03.informatica.com

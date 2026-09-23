@@ -4,18 +4,20 @@
   become: true
   tasks:
   
-  - name: Disable httpd serivce on boot
+  - name: Disable and stop httpd and php-fpm serivces on machines
     ansible.builtin.service:
-      name: httpd
+      name: "{{ item }}"
       enabled: false
-
-  - name: Stopped httpd service, if started
-    ansible.builtin.service:
-      name: httpd
       state: stopped
+    loop:
+      - httpd
+      - php-fpm
+
 
   - name: Remove the httpd package
     ansible.builtin.dnf:
-      name: httpd
+      name: 
+        - "{{ apache_package }}"
+        - "{{ php_package }}"
       state: absent
       autoremove: true

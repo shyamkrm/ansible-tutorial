@@ -4,21 +4,19 @@
   become: true
   tasks:
   
-  - name: Refresh the repolist
-    ansible.builtin.dnf:
+  - name: Install the httpd package
+    package:
+      name:
+        -  "{{ apache_package }}"
+        -  "{{ php_package }}"
+      state: present
       update_cache: true
 
-  - name: Install the httpd package
-    ansible.builtin.dnf:
-      name: httpd
-      state: present
-
-  - name: Start httpd service, if not started
+  - name: Start and enable apache and php services, if not started
     ansible.builtin.service:
-      name: httpd
+      name: "{{ item }}"
       state: started
-
-  - name: Enable httpd serivce on every reboot
-    ansible.builtin.service:
-      name: httpd
       enabled: yes
+    loop:
+      - httpd
+      - php-fpm
