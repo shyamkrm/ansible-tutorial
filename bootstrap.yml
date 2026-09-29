@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: true
+  tasks:
+
+  - name: Refresh repo list
+    tags: always
+    ansible.builtin.dnf:
+      update_cache: true
+
+  - name: add user simone on the servers
+    tags: always
+    user:
+     name: simone
+     groups: root
+     shell: /bin/bash
+
+  - name: copy the SSH file to simone user
+    tags: always
+    ansible.posix.authorized_key:
+      user: simone
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL438AeXwNRRJEGJIS5VeKFPkfxOKLw4hqz2Ysd1xroV shmahale@asvansible01"
+
+  - name: add sudoers file to simone user
+    tags: always
+    copy:
+      src: sudoers_simone
+      dest: /etc/sudoers.d/simone
+      owner: root
+      group: root
+
+
