@@ -1,0 +1,7 @@
+- name: Install samba package on RHEL
+  tags: linux,rhel,samba
+  ansible.builtin.dnf:
+    name: samba
+    state: latest
+  when: ansible_distribution == "RedHat"
+

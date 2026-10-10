@@ -1,98 +1,30 @@
 ---
 - hosts: all
   become: true
-  tasks:
+  pre_tasks:
 
   - name: Refresh repo list
     tags: always
     ansible.builtin.dnf:
       update_cache: true
+    when: ansible_distribution in ['RedHat', 'Rocky']
 
-  - name: copy the SSH file to simone user
-    tags: always
-    ansible.posix.authorized_key:
-      user: simone
-      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL438AeXwNRRJEGJIS5VeKFPkfxOKLw4hqz2Ysd1xroV shmahale@asvansible01"
-
+- hosts: all
+  become: true
+  roles:
+    - base
 
 - hosts: web_servers
   become: true
-  tasks:
-  
-  - name: Install the httpd package
-    tags: linux,apache,httpd
-    package:
-      name:
-        -  httpd
-        -  php
-      state: present
-  - name: copy the site files to webservers
-    tags: linux,apache,httpd
-    copy:
-      src: default_site.html
-      dest: /var/www/html/index.html
-      owner: root
-      group: root
-      mode: 0644
-
-  - name: Start and enable apache and php services, if not started
-    tags: linux,apache,httpd
-    ansible.builtin.service:
-      name: "{{ item }}"
-      state: started
-      enabled: yes
-    loop:
-      - httpd
-      - php-fpm
-
-  - name: update the owneremail for the httpd conf file
-    tags: linux,apache,httpd
-    lineinfile:
-      path: /etc/httpd/conf/httpd.conf
-      regexp: "^ServerAdmin"
-      line: ServerAdmin someone@somewhere.com
-    register: fileupdate
-   
-  - name: Restart the httpd service when changes are made.
-    tags: linux,apache,httpd
-    service:
-      name: httpd
-      state: restarted
-    when: fileupdate.changed
+  roles:
+    - web_servers
 
 - hosts: db_servers
   become: true
-  tasks:
-
-  - name: Install mariadb on rocky linux
-    tags: linux,rocky,db,mariadb
-    ansible.builtin.dnf:
-      name: mariadb
-      state: latest
-    when: ansible_distribution == "Rocky"
-
-  - name: Start and enable Mariadb services, if not started
-    tags: linux,rocky,db,mariadb
-    ansible.builtin.service:
-      name: mariadb
-      state: started
-      enabled: yes
-    when: ansible_distribution == "Rocky"
-
+  roles:
+    - db_servers
 
 - hosts: file_servers
   become: true
-  tasks:
-
-  - name: Install samba package on RHEL
-    tags: linux,rhel,samba
-    ansible.builtin.dnf:
-      name: samba
-      state: latest
-    when: ansible_distribution == "RedHat"
-    
-
-
-
-
-   
+  roles:
+    - file_servers

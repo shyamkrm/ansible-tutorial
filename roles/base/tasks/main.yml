@@ -1,0 +1,5 @@
+  - name: copy the SSH file to simone user
+    tags: always
+    ansible.posix.authorized_key:
+      user: simone
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL438AeXwNRRJEGJIS5VeKFPkfxOKLw4hqz2Ysd1xroV shmahale@asvansible01"
