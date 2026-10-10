@@ -5,7 +5,7 @@
 
   - name: Refresh repo list
     tags: always
-    ansible.builtin.dnf:
+    ansible.builtin.package:
       update_cache: true
 
   - name: add user simone on the servers

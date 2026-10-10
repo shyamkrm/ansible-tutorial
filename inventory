@@ -23,3 +23,6 @@ invtestskmvm03.informatica.com
 [file_servers]
 invtestvmskm01.informatica.com
 invtestskmvm03.informatica.com
+
+[suse_servers]
+invsuse15sp5test01.informatica.com ansible_python_interpreter=/usr/bin/python3.11
